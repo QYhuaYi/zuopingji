@@ -10,6 +10,17 @@
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/projects.css" />
   <link rel="stylesheet" href="css/responsive.css" />
+  <script>
+    // 在样式渲染前恢复用户上次选择的主题，避免深色用户看到浅色闪烁
+    (function () {
+      try {
+        var theme = localStorage.getItem("theme");
+        if (theme === "dark" || theme === "light") {
+          document.documentElement.setAttribute("data-theme", theme);
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#projects">跳转到项目作品</a>
@@ -26,6 +37,16 @@
       </nav>
 
       <a class="nav__mail" href="mailto:1694447923@qq.com">1694447923@qq.com</a>
+
+      <button class="nav__theme" id="themeToggle" type="button" aria-label="切换到深色主题">
+        <svg class="nav__theme-icon nav__theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+        <svg class="nav__theme-icon nav__theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+        </svg>
+      </button>
 
       <button class="nav__toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="打开导航菜单">
         <span class="nav__toggle-bar"></span>

@@ -4,6 +4,7 @@
    2) 导航滚动高亮 + 滚动后导航栏加背景
    3) 移动端菜单开合
    4) 元素进入视口时的轻微淡入
+   5) 深浅色主题切换（localStorage 记忆）
    ========================================================================== */
 
 (function () {
@@ -175,6 +176,42 @@
     );
     revealItems.forEach(function (item) {
       revealObserver.observe(item);
+    });
+  }
+
+  /* ---------------- 5. 深浅色主题切换 ----------------
+     初始主题由 index.html 头部内联脚本提前恢复，避免闪烁；
+     这里只负责按钮交互、图标状态与 localStorage 写入。 */
+
+  var THEME_KEY = "theme";
+  var root = document.documentElement;
+  var themeToggle = document.getElementById("themeToggle");
+
+  function applyTheme(theme) {
+    root.setAttribute("data-theme", theme);
+    if (themeToggle) {
+      themeToggle.setAttribute(
+        "aria-label",
+        theme === "dark" ? "切换到浅色主题" : "切换到深色主题"
+      );
+    }
+  }
+
+  function storeTheme(theme) {
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch (e) {}
+  }
+
+  // 兜底：内联脚本未执行时确保主题状态明确（默认浅色）
+  var currentTheme = root.getAttribute("data-theme");
+  applyTheme(currentTheme === "dark" ? "dark" : "light");
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      applyTheme(next);
+      storeTheme(next);
     });
   }
 })();
