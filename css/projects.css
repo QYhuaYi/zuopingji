@@ -1,0 +1,278 @@
+/* ==========================================================================
+   projects.css — 杂志式项目展示区
+   三种版式变体：feature（全宽大图）/ split-left / split-right / compact
+   新增项目只需在 js/projects.js 的 layout 字段中指定变体名
+   ========================================================================== */
+
+.projects {
+  padding-block: var(--space-section);
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- 区块标题 ---------- */
+.section-head {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  row-gap: 14px;
+  margin-bottom: clamp(36px, 5vw, 72px);
+}
+
+.section-head .label {
+  grid-column: 1 / span 12;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-head__title {
+  grid-column: 1 / span 8;
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: 1.24;
+}
+
+.section-head__note {
+  grid-column: 1 / span 12;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ---------- 单个项目：12 列编辑式栅格 ---------- */
+.project {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  row-gap: clamp(18px, 2.4vw, 34px);
+  padding-block: clamp(40px, 6vw, 84px);
+  border-top: 1px solid var(--line);
+  --accent: #c0442b;
+}
+
+/* 大号项目编号 */
+.project__index {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
+  line-height: 0.95;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+/* 图片 */
+.project__media {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-deep);
+}
+
+.project__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.project__media--wide {
+  aspect-ratio: 16 / 9;
+}
+
+.project__media--pano {
+  aspect-ratio: 21 / 9;
+}
+
+.project__media--classic {
+  aspect-ratio: 4 / 3;
+}
+
+.project__media--tall {
+  aspect-ratio: 4 / 5;
+}
+
+.project__media--square {
+  aspect-ratio: 1 / 1;
+}
+
+.project:hover .project__media img {
+  transform: scale(1.03);
+}
+
+/* 文字块 */
+.project__body {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  row-gap: 24px;
+  align-content: start;
+}
+
+.project__main {
+  grid-column: 1 / span 7;
+}
+
+.project__kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.project__kicker::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+}
+
+.project__title {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  line-height: 1.22;
+}
+
+.project__subtitle {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* 类别标签：小型胶囊，沿用导航邮箱按钮的细边框视觉语言 */
+.project__tag {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 2px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.project__summary {
+  max-width: 58ch;
+  margin-top: 16px;
+  color: var(--ink-soft);
+}
+
+/* 元信息：技术栈 / 时间 / 类别 */
+.project__meta {
+  grid-column: 9 / span 4;
+  align-self: start;
+}
+
+.project__meta-item {
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.project__meta dt {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.project__meta dd {
+  margin-top: 6px;
+  font-size: var(--fs-small);
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* ---------- 变体 A：全宽大图 + 双栏文字 ---------- */
+.project--feature .project__index {
+  grid-column: 1 / span 3;
+  grid-row: 1;
+}
+
+.project--feature .project__media {
+  grid-column: 1 / span 12;
+  grid-row: 2;
+}
+
+.project--feature .project__body {
+  grid-column: 1 / span 12;
+  grid-row: 3;
+}
+
+/* ---------- 变体 B：图左文右 ---------- */
+.project--split-left .project__index {
+  grid-column: 8 / span 3;
+  grid-row: 1;
+}
+
+.project--split-left .project__media {
+  grid-column: 1 / span 6;
+  grid-row: 1 / span 2;
+}
+
+.project--split-left .project__body {
+  grid-column: 8 / span 5;
+  grid-row: 2;
+}
+
+/* ---------- 变体 C：文左图右 ---------- */
+.project--split-right .project__index {
+  grid-column: 1 / span 3;
+  grid-row: 1;
+}
+
+.project--split-right .project__body {
+  grid-column: 1 / span 5;
+  grid-row: 2;
+}
+
+.project--split-right .project__media {
+  grid-column: 7 / span 6;
+  grid-row: 1 / span 2;
+}
+
+/* 左右分栏时文字改为单栏堆叠 */
+.project--split-left .project__main,
+.project--split-right .project__main,
+.project--compact .project__main,
+.project--split-left .project__meta,
+.project--split-right .project__meta {
+  grid-column: 1 / -1;
+}
+
+/* ---------- 变体 D：小图偏置 + 大段文字 ---------- */
+.project--compact .project__index {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+}
+
+.project--compact .project__body {
+  grid-column: 1 / span 6;
+  grid-row: 2;
+}
+
+.project--compact .project__media {
+  grid-column: 9 / span 4;
+  grid-row: 1 / span 2;
+  align-self: start;
+  /* 下沉错位：制造杂志式的错落留白 */
+  margin-top: clamp(16px, 3vw, 56px);
+}
+
+/* compact 变体的元信息横排三项，作为节奏变化 */
+.project--compact .project__meta {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+}
+
+/* 分栏变体：图文纵向对齐方式 */
+.project--split-left .project__media,
+.project--split-right .project__media {
+  align-self: start;
+}
